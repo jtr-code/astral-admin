@@ -60,7 +60,7 @@ const SitesTable = () => {
                 </td>
                 <td className="px-4 py-3">
                   <img
-                    src="/api/placeholder/50/50"
+                    src="/api/placeholder/50/50"           
                     alt={site.title}
                     className="w-10 h-10 rounded object-cover"
                   />
@@ -78,10 +78,10 @@ const SitesTable = () => {
                 <td className="px-4 py-3 text-gray-200">{site.author}</td>
                 <td className="px-4 py-3">
                   <span className={`px-2 py-1 rounded-full text-xs ${site.isTrending
-                      ? 'bg-green-500/20 text-green-400'
-                      : 'bg-red-500/20 text-red-400'
+                    ? 'bg-green-500/20 text-green-400'
+                    : 'bg-red-500/20 text-red-400'
                     }`}>
-                    {site.isTrending ? 'Yes' : 'No'}
+                    {site.isTrending ? 'True' : 'False'}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-gray-200">
