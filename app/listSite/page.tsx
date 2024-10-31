@@ -3,7 +3,7 @@ import React from 'react';
 interface SiteData {
   title: string;
   description: string;
-  imageUrl: string;
+  image: string;
   url: string;
   author: string;
   isTrending: boolean;
@@ -16,7 +16,7 @@ const SitesTable = () => {
     {
       title: "Example Site 1",
       description: "This is a description for site 1",
-      imageUrl: "/placeholder1.jpg",
+      image: "/placeholder1.jpg",
       url: "https://example1.com",
       author: "John Doe",
       isTrending: true,
@@ -25,7 +25,7 @@ const SitesTable = () => {
     {
       title: "Example Site 2",
       description: "This is a description for site 2",
-      imageUrl: "/placeholder2.jpg",
+      image: "/placeholder2.jpg",
       url: "https://example2.com",
       author: "Jane Smith",
       isTrending: false,
@@ -60,7 +60,7 @@ const SitesTable = () => {
                 </td>
                 <td className="px-4 py-3">
                   <img
-                    src="/api/placeholder/50/50"           
+                    src="/api/placeholder/50/50"
                     alt={site.title}
                     className="w-10 h-10 rounded object-cover"
                   />
