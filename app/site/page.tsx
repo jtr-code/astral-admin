@@ -46,7 +46,7 @@ const Site = () => {
                     className="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-gray-200"
                 />
                 {errors.title && (
-                    <span className="text-red-500 p-2">{errors.title.message}</span>
+                    <span className="text-red-500">{errors.title.message}</span>
                 )}
             </div>
 
@@ -64,7 +64,7 @@ const Site = () => {
                     className="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-gray-200"
                 />
                 {errors.description && (
-                    <span className="text-red-500 p-2">{errors.description.message}</span>
+                    <span className="text-red-500">{errors.description.message}</span>
                 )}
             </div>
 
