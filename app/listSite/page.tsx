@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface SiteData {
   title: string;
@@ -11,7 +11,6 @@ interface SiteData {
 }
 
 const SitesTable = () => {
-
   const sites: SiteData[] = [
     {
       title: "Example Site 1",
@@ -20,7 +19,7 @@ const SitesTable = () => {
       url: "https://example1.com",
       author: "John Doe",
       isTrending: true,
-      createdAt: "2024-10-30"
+      createdAt: "2024-10-30",
     },
     {
       title: "Example Site 2",
@@ -29,8 +28,8 @@ const SitesTable = () => {
       url: "https://example2.com",
       author: "Jane Smith",
       isTrending: false,
-      createdAt: "2024-10-29"
-    }
+      createdAt: "2024-10-29",
+    },
   ];
 
   return (
@@ -39,14 +38,30 @@ const SitesTable = () => {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-slate-700 bg-slate-800">
-              <th className="px-4 py-3 text-left text-gray-200 font-medium">Title</th>
-              <th className="px-4 py-3 text-left text-gray-200 font-medium">Description</th>
-              <th className="px-4 py-3 text-left text-gray-200 font-medium">Image</th>
-              <th className="px-4 py-3 text-left text-gray-200 font-medium">URL</th>
-              <th className="px-4 py-3 text-left text-gray-200 font-medium">Author</th>
-              <th className="px-4 py-3 text-left text-gray-200 font-medium">Trending</th>
-              <th className="px-4 py-3 text-left text-gray-200 font-medium">Date</th>
-              <th className="px-4 py-3 text-left text-gray-200 font-medium">Actions</th>
+              <th className="px-4 py-3 text-left text-gray-200 font-medium">
+                Title
+              </th>
+              <th className="px-4 py-3 text-left text-gray-200 font-medium">
+                Description
+              </th>
+              <th className="px-4 py-3 text-left text-gray-200 font-medium">
+                Image
+              </th>
+              <th className="px-4 py-3 text-left text-gray-200 font-medium">
+                URL
+              </th>
+              <th className="px-4 py-3 text-left text-gray-200 font-medium">
+                Author
+              </th>
+              <th className="px-4 py-3 text-left text-gray-200 font-medium">
+                Trending
+              </th>
+              <th className="px-4 py-3 text-left text-gray-200 font-medium">
+                Date
+              </th>
+              <th className="px-4 py-3 text-left text-gray-200 font-medium">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-700">
@@ -77,11 +92,14 @@ const SitesTable = () => {
                 </td>
                 <td className="px-4 py-3 text-gray-200">{site.author}</td>
                 <td className="px-4 py-3">
-                  <span className={`px-2 py-1 rounded-full text-xs ${site.isTrending
-                    ? 'bg-green-500/20 text-green-400'
-                    : 'bg-red-500/20 text-red-400'
-                    }`}>
-                    {site.isTrending ? 'True' : 'False'}
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs ${
+                      site.isTrending
+                        ? "bg-green-500/20 text-green-400"
+                        : "bg-red-500/20 text-red-400"
+                    }`}
+                  >
+                    {site.isTrending ? "True" : "False"}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-gray-200">
