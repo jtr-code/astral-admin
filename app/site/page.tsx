@@ -19,12 +19,12 @@ const Site = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = useForm<FormValues>({
         resolver: zodResolver(formSchema),
     });
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
         console.log(data);
     };
 
@@ -125,9 +125,10 @@ const Site = () => {
             <div className="pt-4">
                 <button
                     type="submit"
+                    disabled={isSubmitting}
                     className="w-fit bg-slate-600 hover:bg-slate-700 text-white font-medium py-2 px-4 rounded-md shadow-sm transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:ring-offset-slate-700"
                 >
-                    Publish
+                    {isSubmitting ? "Publishing" : "Publish"}
                 </button>
             </div>
         </form>
