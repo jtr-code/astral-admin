@@ -1,18 +1,28 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
 
-type FormValues = {
-    title: string;
-    description: string;
-    image: string;
-    url?: string;
-    author?: string;
-    isTrending?: boolean;
-};
+const formSchema = z.object({
+    title: z.string().min(1, "Title is required"),
+    description: z.string().min(1, "Description is required"),
+    image: z.any().refine((files) => files?.length == 1, "Image is required."),
+    url: z.string().optional(),
+    author: z.string().optional(),
+    isTrending: z.boolean().optional(),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 const Site = () => {
-    const { register, handleSubmit } = useForm<FormValues>();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+    });
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
         console.log(data);
@@ -35,6 +45,9 @@ const Site = () => {
                     placeholder="Title of your site"
                     className="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-gray-200"
                 />
+                {errors.title && (
+                    <span className="text-red-500 p-2">{errors.title.message}</span>
+                )}
             </div>
 
             <div className="space-y-2">
@@ -50,6 +63,9 @@ const Site = () => {
                     rows={4}
                     className="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-gray-200"
                 />
+                {errors.description && (
+                    <span className="text-red-500 p-2">{errors.description.message}</span>
+                )}
             </div>
 
             <div className="space-y-2">
@@ -64,6 +80,9 @@ const Site = () => {
                     accept="image/*"
                     className="w-full text-sm outline-none text-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-slate-600 file:text-gray-100 hover:file:bg-slate-700"
                 />
+                {errors.image && (
+                    <span className="text-red-500">{(errors.image as any)?.message}</span>
+                )}
             </div>
 
             <div className="space-y-2">
