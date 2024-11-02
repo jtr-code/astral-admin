@@ -1,7 +1,12 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { List, Plus } from "lucide-react";
 import Link from "next/link";
 
-const Sidebar = () => {
+export default function Sidebar() {
+  const pathname = usePathname();
+
   const menuItems = [
     { icon: <Plus className="w-5 h-5" />, label: "Add Site", href: "/site" },
     { icon: <List className="w-5 h-5" />, label: "Lists", href: "/listSite" },
@@ -20,7 +25,7 @@ const Sidebar = () => {
               <li key={index}>
                 <Link
                   href={item.href}
-                  className="flex items-center gap-3 px-4 py-2 text-gray-300 hover:bg-slate-800 rounded-md transition-colors"
+                  className={`${pathname === item.href ? "bg-blue-900 font-semibold text-white" : "hover:bg-slate-800"} flex items-center gap-3 px-4 py-2 text-gray-300  rounded-md transition-colors`}
                 >
                   {item.icon}
                   <span>{item.label}</span>
@@ -32,6 +37,4 @@ const Sidebar = () => {
       </div>
     </div>
   );
-};
-
-export default Sidebar;
+}
