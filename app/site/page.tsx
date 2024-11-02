@@ -58,10 +58,10 @@ const Site = () => {
                     Description*
                 </label>
                 <textarea
-                    placeholder="Add your description"
+                    placeholder="Description of your site"
                     {...register("description")}
-                    rows={4}
-                    className="w-full px-3 py-2 bg-slate-600 border border-slate-500 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-gray-200"
+                    rows={5}
+                    className="w-full px-3 resize-none py-2 bg-slate-600 border border-slate-500 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-400 text-gray-200"
                 />
                 {errors.description && (
                     <span className="text-red-500">{errors.description.message}</span>
