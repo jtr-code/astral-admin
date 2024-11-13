@@ -39,6 +39,10 @@ const SitesTable = () => {
         console.log(siteId)
     }
 
+    const handleDeleteButton = (siteId: string) => {
+        console.log(siteId)
+    }
+
     if (!sites || loading) return <Loader />;
     if (sites.length === 0) return <NoContentPage />;
 
@@ -119,7 +123,7 @@ const SitesTable = () => {
                                         <button className="px-3 py-1 text-xs rounded-md bg-slate-600 text-gray-200 hover:bg-slate-500" onClick={() => handleEditButton(site._id)}>
                                             Edit
                                         </button>
-                                        <button className="px-3 py-1 text-xs rounded-md bg-red-600 text-gray-200 hover:bg-red-500">
+                                        <button className="px-3 py-1 text-xs rounded-md bg-red-600 text-gray-200 hover:bg-red-500"  onClick={() => handleDeleteButton(site._id)}>
                                             Delete
                                         </button>
                                     </div>
