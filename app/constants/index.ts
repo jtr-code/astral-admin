@@ -7,3 +7,5 @@ export const GET_SITE_BY_ID = BASE_URL + "/sites"; // will pass siteId as params
 export const CREATE_SITE = BASE_URL + "/admin/site";
 
 export const UPDATE_SITE = BASE_URL + "/admin/site"; // will pass siteId as params
+
+export const DELETE_SITE = BASE_URL + "/admin/site"; // will pass siteId as params
