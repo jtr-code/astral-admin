@@ -157,11 +157,10 @@ const Site = () => {
                     type="submit"
                     disabled={isButtonDisabled}
                     className={`w-fit font-medium py-2 px-4 rounded-md shadow-sm transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:ring-offset-slate-700
-                    ${
-                        isButtonDisabled
+                    ${isButtonDisabled
                             ? "bg-slate-400 text-gray-300 cursor-not-allowed"
                             : "bg-slate-600 hover:bg-slate-700 text-white"
-                    }`}
+                        }`}
                 >
                     {isSubmitting ? "Publishing" : "Publish"}
                 </button>
