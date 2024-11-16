@@ -3,9 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { CREATE_SITE } from "../constants";
+import { CREATE_SITE, GET_SITE_BY_ID } from "../constants";
 import { useNotification } from "../utils/useNotification";
 import React from "react";
+import Loader from "../components/Loader";
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -17,9 +18,24 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
+type Params = { id?: string };
+// interface SiteData {
+//     title: string;
+//     description: string;
+//     image: string;
+//     url: string;
+//     author: string;
+//     isTrending: boolean;
+//     updatedAt: string;
+//     _id: string;
+// }
 
 const Site = (context: any) => {
-    const params = React.use(context?.searchParams);
+
+    const params: Params = React.use(context?.searchParams);
+    const { id } = params;
+
+    const [loading, setLoading] = React.useState(true);
     const { showAlert } = useNotification();
 
     const {
@@ -57,6 +73,29 @@ const Site = (context: any) => {
             reset();
         }
     };
+
+    React.useEffect(() => {
+        if (id) {
+            async function fetchSingleId() {
+                try {
+                    const res = await fetch(`${GET_SITE_BY_ID}/${id}`);
+                    const data = await res.json();
+                    console.log("data", data.data);
+                } catch (error: any) {
+                    console.error("Failed to fetch data based on id", error.message)
+                } finally {
+                    setLoading(false);
+                }
+            }
+
+            fetchSingleId()
+        }
+    }, [id])
+
+
+
+    if (loading) return <Loader />;
+
 
     const isButtonDisabled = isSubmitting || !isValid;
 
@@ -110,7 +149,7 @@ const Site = (context: any) => {
                     {...register("image")}
                     id="img"
                     accept="image/*"
-                    className="w-full text-sm outline-none text-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-slate-600 file:text-gray-100 hover:file:bg-slate-700"
+                    className="w-fit text-sm outline-none text-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-slate-600 file:text-gray-100 hover:file:bg-slate-700"
                 />
                 {errors.image && (
                     <span className="text-red-500">{(errors.image as any)?.message}</span>
