@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { GET_ALL_SITES } from "../constants";
 import Loader from "../components/Loader";
 import NoContentPage from "../components/NoContentPage";
+import Link from "next/link";
 
 interface SiteData {
     title: string;
@@ -108,8 +109,8 @@ const SitesTable = () => {
                                 <td className="px-4 py-3">
                                     <span
                                         className={`px-2 py-1 rounded-full text-xs ${site.isTrending
-                                                ? "bg-green-500/20 text-green-400"
-                                                : "bg-red-500/20 text-red-400"
+                                            ? "bg-green-500/20 text-green-400"
+                                            : "bg-red-500/20 text-red-400"
                                             }`}
                                     >
                                         {site.isTrending ? "True" : "False"}
@@ -120,10 +121,17 @@ const SitesTable = () => {
                                 </td>
                                 <td className="px-4 py-3">
                                     <div className="flex space-x-2">
-                                        <button className="px-3 py-1 text-xs rounded-md bg-slate-600 text-gray-200 hover:bg-slate-500" onClick={() => handleEditButton(site._id)}>
+                                        <Link
+                                            href={{
+                                                pathname: '/site',
+                                                query: {
+                                                    id: site._id
+                                                }
+                                            }}
+                                            className="px-3 py-1 text-xs rounded-md bg-slate-600 text-gray-200 hover:bg-slate-500" onClick={() => handleEditButton(site._id)}>
                                             Edit
-                                        </button>
-                                        <button className="px-3 py-1 text-xs rounded-md bg-red-600 text-gray-200 hover:bg-red-500"  onClick={() => handleDeleteButton(site._id)}>
+                                        </Link>
+                                        <button className="px-3 py-1 text-xs rounded-md bg-red-600 text-gray-200 hover:bg-red-500" onClick={() => handleDeleteButton(site._id)}>
                                             Delete
                                         </button>
                                     </div>

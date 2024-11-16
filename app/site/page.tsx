@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { CREATE_SITE } from "../constants";
 import { useNotification } from "../utils/useNotification";
+import React from "react";
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -17,7 +18,8 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const Site = () => {
+const Site = (context: any) => {
+    const params = React.use(context?.searchParams);
     const { showAlert } = useNotification();
 
     const {
