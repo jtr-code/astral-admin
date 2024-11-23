@@ -21,6 +21,7 @@ interface SiteData {
 const SitesTable = () => {
     const [sites, setSites] = useState<SiteData[]>();
     const [loading, setLoading] = useState(true);
+    const [expandedRows, setExpandedRows] = useState<string[]>([]);
 
     const { showAlert } = useNotification();
 
@@ -45,22 +46,30 @@ const SitesTable = () => {
         if (!userConfirmed) return;
 
         try {
-          const res = await fetch(`${DELETE_SITE}/${siteId}`, {
-            method: "DELETE",
-          });
+            const res = await fetch(`${DELETE_SITE}/${siteId}`, {
+                method: "DELETE",
+            });
 
-          if (!res.ok) {
-            showAlert("error", "Failed to delete site!");
-            return;
-          }
+            if (!res.ok) {
+                showAlert("error", "Failed to delete site!");
+                return;
+            }
 
-          showAlert("success", "Site deleted successfully");
-          await fetchPosts();
+            showAlert("success", "Site deleted successfully");
+            await fetchPosts();
         } catch (error: any) {
-          console.error("Error deleting site:", error.message);
-          showAlert("error", "Something unexpected occurred!");
+            console.error("Error deleting site:", error.message);
+            showAlert("error", "Something unexpected occurred!");
         }
-      };
+    };
+
+    const toggleExpandRow = (siteId: string) => {
+        if (expandedRows.includes(siteId)) {
+            setExpandedRows(expandedRows.filter((id) => id !== siteId));
+        } else {
+            setExpandedRows([...expandedRows, siteId]);
+        }
+    };
 
 
     if (!sites || loading) return <Loader />;
@@ -99,64 +108,81 @@ const SitesTable = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-700">
-                        {sites.map((site, index) => (
-                            <tr key={index} className="hover:bg-slate-700">
-                                <td className="px-4 py-3 text-gray-200">{site.title}</td>
-                                <td className="px-4 py-3 text-gray-200">
-                                    {site.description.length > 50
-                                        ? `${site.description.substring(0, 50)}...`
-                                        : site.description}
-                                </td>
-                                <td className="px-4 py-3">
-                                    <img
-                                        src={site.image}
-                                        alt={site.title}
-                                        className="w-10 h-10 rounded object-cover"
-                                    />
-                                </td>
-                                <td className="px-4 py-3">
-                                    <a
-                                        href={site.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-blue-400 hover:text-blue-300"
-                                    >
-                                        Visit Site
-                                    </a>
-                                </td>
-                                <td className="px-4 py-3 text-gray-200">{site.author}</td>
-                                <td className="px-4 py-3">
-                                    <span
-                                        className={`px-2 py-1 rounded-full text-xs ${site.isTrending
-                                            ? "bg-green-500/20 text-green-400"
-                                            : "bg-red-500/20 text-red-400"
-                                            }`}
-                                    >
-                                        {site.isTrending ? "True" : "False"}
-                                    </span>
-                                </td>
-                                <td className="px-4 py-3 text-gray-200">
-                                    {new Date(site.updatedAt).toLocaleDateString()}
-                                </td>
-                                <td className="px-4 py-3">
-                                    <div className="flex space-x-2">
-                                        <Link
-                                            href={{
-                                                pathname: '/site',
-                                                query: {
-                                                    id: site._id
-                                                }
-                                            }}
-                                            className="px-3 py-1 text-xs rounded-md bg-slate-600 text-gray-200 hover:bg-slate-500">
-                                            Edit
-                                        </Link>
-                                        <button className="px-3 py-1 text-xs rounded-md bg-red-600 text-gray-200 hover:bg-red-500" onClick={() => handleDeleteButton(site._id)}>
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                        {sites.map((site, index) => {
+                            const isExpanded = expandedRows.includes(site._id);
+                            return (
+                                <tr key={index} className="hover:bg-slate-700">
+                                    <td className="px-4 py-3 text-gray-200">{site.title}</td>
+                                    <td className="px-4 py-3 text-gray-200">
+                                        {isExpanded
+                                            ? site.description
+                                            : site.description.length > 50
+                                                ? `${site.description.substring(0, 50)}...`
+                                                : site.description}
+                                        {site.description.length > 50 && (
+                                            <button
+                                                className="ml-2 text-blue-400 hover:text-blue-300 text-xs"
+                                                onClick={() => toggleExpandRow(site._id)}
+                                            >
+                                                {isExpanded ? "Show Less" : "Show More"}
+                                            </button>
+                                        )}
+                                    </td>
+                                    <td className="px-4 py-3">
+                                        <img
+                                            src={site.image}
+                                            alt={site.title}
+                                            className="w-10 h-10 rounded object-cover"
+                                        />
+                                    </td>
+                                    <td className="px-4 py-3">
+                                        <a
+                                            href={site.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-400 hover:text-blue-300"
+                                        >
+                                            Visit Site
+                                        </a>
+                                    </td>
+                                    <td className="px-4 py-3 text-gray-200">{site.author}</td>
+                                    <td className="px-4 py-3">
+                                        <span
+                                            className={`px-2 py-1 rounded-full text-xs ${site.isTrending
+                                                ? "bg-green-500/20 text-green-400"
+                                                : "bg-red-500/20 text-red-400"
+                                                }`}
+                                        >
+                                            {site.isTrending ? "True" : "False"}
+                                        </span>
+                                    </td>
+                                    <td className="px-4 py-3 text-gray-200">
+                                        {new Date(site.updatedAt).toLocaleDateString()}
+                                    </td>
+                                    <td className="px-4 py-3">
+                                        <div className="flex space-x-2">
+                                            <Link
+                                                href={{
+                                                    pathname: "/site",
+                                                    query: {
+                                                        id: site._id,
+                                                    },
+                                                }}
+                                                className="px-3 py-1 text-xs rounded-md bg-slate-600 text-gray-200 hover:bg-slate-500"
+                                            >
+                                                Edit
+                                            </Link>
+                                            <button
+                                                className="px-3 py-1 text-xs rounded-md bg-red-600 text-gray-200 hover:bg-red-500"
+                                                onClick={() => handleDeleteButton(site._id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
