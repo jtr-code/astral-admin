@@ -13,7 +13,7 @@ export const useNotification = () => {
         vertical: "top",
         horizontal: "right",
       },
-      autoHideDuration: 2500,
+      autoHideDuration: 1000,
     });
   };
 
