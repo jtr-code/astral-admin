@@ -1,7 +1,10 @@
 import React from "react";
+import { useRouter } from 'next/navigation';
 
 const NoContentPage = () => {
     const [imgDataURI, setImgDataURI] = React.useState("");
+
+    const navigate = useRouter();
 
     React.useEffect(() => {
         setImgDataURI(
@@ -25,7 +28,11 @@ const NoContentPage = () => {
             </div>
             <div>
                 <h2>0 results found</h2>
-                <p>Sorry! We couldn't find any results.</p>
+                <p>Sorry! We couldn't find any site.</p>
+                <button className="mt-4 bg-lime-950 text-lime-400 border border-lime-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group" onClick={() => navigate.push("/site")}>
+                    <span className="bg-lime-400 shadow-lime-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
+                    Add your site
+                </button>
             </div>
         </div>
     );
